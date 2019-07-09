@@ -1,10 +1,12 @@
 import * as express from 'express';
+import * as expressWsMiddleware from 'express-ws';
 import * as cors from 'cors';
 import { arrivals } from './arrivals';
 import { departures } from './departures';
 import { gateChanges } from './gate-changes';
+import { websocketify } from './ws';
 
-const app = express();
+const app = expressWsMiddleware(express()).app;
 
 app.use(cors());
 
@@ -32,6 +34,8 @@ app.get('/gate-changes/:search', (req, res) => {
         res.json(filteredGateChanges);
     }, Math.random() * 3000);
 });
+
+websocketify(app);
 
 app.listen(3000, () => {
     console.log('Example app listening on port 3000!');

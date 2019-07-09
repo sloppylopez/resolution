@@ -1,17 +1,25 @@
 # Code Challenge
 
-This repository contains 3 challenges.  
-See this as an opportunity to show us your way of working, with the same quality as you would deliver on the job.
+This repository contains 4 challenges of which we would like you to solve three. **You may choose** between skipping either challenge-3 or challenge-4. See this as an opportunity to show us your way of working, with the same quality as you would deliver on the job.
+
+## How to send us your solution
+
+Please don’t make solutions to the code challenge publicly available online.
+
+We would prefer to receive a link to a private repository or the project archived in an email.
 
 ## Typescript
 
-The first two are plain typescript challenges that you can find here:  
-`src/app/challenge-1.ts`  
+The first three are plain typescript challenges that you can find here:  
+`src/app/challenge-1.ts`
 `src/app/challenge-2.ts`
+`src/app/challenge-3.ts` (or choose challenge-4 instead)
+
+You can run these challenges like this: `npm run challenge-1`, `npm run challenge-2`, `npm run challenge-3`
 
 ## Angular
 
-The third challenge involves developing a small user story. 
+The fourth challenge involves developing a small user story in Angular+. 
 
 The assignment is to create an interface where you can search by flightNumber through gate changes. A gate change is when a flight is directed to a different gate than originally planned. The gate changes, arrival and departure times can change at any time, so API requests should not be cached.  
 
@@ -60,7 +68,3 @@ Scenario: Clearing gate changes
 Given I am on the Code Challenge page  
 When I start clear the input field  
 Then no gate changes should be shown  
-
-Please don’t make solutions to the code challenge publicly available online.
-
-We would prefer to receive a link to a private repository or the project archived in an email.
