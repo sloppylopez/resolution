@@ -6,7 +6,7 @@ This repository contains 4 challenges of which we would like you to solve three.
 
 Please don’t make solutions to the code challenge publicly available online.
 
-We would prefer to receive a link to a private repository or the project archived in an email.
+We would prefer to receive a link to a private repository.
 
 ## Typescript
 
