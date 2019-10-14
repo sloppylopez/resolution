@@ -1,6 +1,6 @@
-import * as express from 'express';
-import * as expressWsMiddleware from 'express-ws';
-import * as cors from 'cors';
+import express from 'express';
+import expressWsMiddleware from 'express-ws';
+import cors from 'cors';
 import { arrivals } from './arrivals';
 import { departures } from './departures';
 import { gateChanges } from './gate-changes';

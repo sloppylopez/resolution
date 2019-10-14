@@ -11,9 +11,10 @@
  * The flight data can be collected from the backend, which you can start up with "npm run start:api"
  *
  * You can get flight information by making a REST call to http://localhost:3000/arrivals and http://localhost:3000/departures
- * You can get flight actual landing/take-off times through WebSockets from ws://localhost:3000/flightUpdates
+ * You can get flight actual landing/take-off updates over WebSockets from ws://localhost:3000/flightUpdates
  *
- * Accumulate the flight data until the websocket disconnects. Then group the flights into the buckets above,
+ * Process the payload of the FLIGHT_UPDATE messages which are send over the websocket.
+ * When a PRINT message is received, a message should be printed to the console with the flights grouped into the buckets above,
  * this can be determined by the delta between the departureTime vs takeOffTime and arrivalTime vs landingTime.
  * For example; a flight with a takeOffTime that is before the departureTime is counted as an early departure.
  *
@@ -21,6 +22,18 @@
  *
  * The output could look something like this:
  *
+ * {
+ *     lateArrivals: 11,
+ *     earlyArrivals: 12,
+ *     lateDepartures: 10,
+ *     earlyDepartures: 15,
+ * }
+ * {
+ *     lateArrivals: 12,
+ *     earlyArrivals: 11,
+ *     lateDepartures: 18,
+ *     earlyDepartures: 26,
+ * }
  * {
  *     lateArrivals: 10,
  *     earlyArrivals: 15,
@@ -31,8 +44,18 @@
  * (Tip: the use of RxJS might be of big help but is not obligated)
  */
 
+import { MessageType } from './../api/ws';
 import { ArrivalFlight, ArrivalFlightUpdate } from '../api/arrivals';
 import { DepartureFlight, DepartureFlightUpdate } from '../api/departures';
 
 type Flight = ArrivalFlight | DepartureFlight;
 type FlightUpdate = ArrivalFlightUpdate | DepartureFlightUpdate;
+type WebsocketMessage =
+    | {
+          type: MessageType.FLIGHT_UPDATE;
+          payload: FlightUpdate;
+      }
+    | {
+          type: MessageType.PRINT;
+          payload: 'ArrivalTimeMap';
+      };
