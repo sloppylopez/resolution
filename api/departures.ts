@@ -245,7 +245,7 @@ export const departures: DepartureFlight[] = [
         departureTime: '2019-06-15T20:25:00.000Z',
     },
     {
-        flightNumber: 'OR736',
+        flightNumber: 'OR735',
         destination: 'Catania',
         gate: 'G10',
         passengers: 172,
@@ -742,7 +742,7 @@ export const updatedDepartures: DepartureFlightUpdate[] = [
     { flightNumber: 'AT1716', takeOffTime: '2019-06-16T06:32:00.000Z' },
     { flightNumber: 'TY1136', takeOffTime: '2019-06-16T10:29:00.000Z' },
     { flightNumber: 'SK749', takeOffTime: '2019-06-15T10:20:49.000Z' },
-    { flightNumber: 'OR736', takeOffTime: '2019-06-15T13:08:15.000Z' },
+    { flightNumber: 'OR735', takeOffTime: '2019-06-15T13:08:15.000Z' },
     { flightNumber: 'KL657', takeOffTime: '2019-06-15T15:22:00.000Z' },
     { flightNumber: 'OR1402', takeOffTime: '2019-06-15T12:00:11.000Z' },
     { flightNumber: 'KL1915', takeOffTime: '2019-06-15T10:15:27.000Z' },
