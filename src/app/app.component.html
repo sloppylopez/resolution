@@ -1,5 +1,22 @@
-<header><h1>Gate changes</h1></header>
-<main>
-  <input class="search" placeholder="Search gate changes..." type="text">
-</main>
+<!--<header><h1>Gate changes</h1></header>-->
+<!--<main>-->
+<!--  <input class="search" placeholder="Search gate changes..." type="text">-->
+<!--</main>-->
+<script src="app.module.ts"></script>
+<script src="app.component.ts"></script>
+<div class="container">
+    <form [formGroup]="stateForm">
+        <mat-form-field>
+            <input type="text" matInput placeholder="Gate Changes" formControlName="stateGroup" required
+                   [matAutocomplete]="autoGroup">
+            <mat-autocomplete #autoGroup="matAutocomplete">
+                <mat-option *ngFor="let group of stateGroupOptions | async" [value]="group.flightNumber">
+                    {{group.flightNumber}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</div>
+
+
 <router-outlet></router-outlet>
