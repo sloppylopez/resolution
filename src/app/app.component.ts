@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Observable} from "rxjs";
-import {startWith, map} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 import {GateChange} from "./interfaces/group.interface";
-import {CrudService} from "./services/crud.service";
+import {SearchService} from "./services/crud.service";
 
 @Component({
     selector: 'app-root',
@@ -15,49 +14,34 @@ export class AppComponent implements OnInit {
         stateGroup: '',
     });
 
-    stateGroups: GateChange[] = [
-        {
-            'currentGate': 'B3',
-            'previousGate': 'H11',
-            'flightNumber': 'OR1621', 'direction': 'Departure'
-        }, {
-            'currentGate': 'F0',
-            'previousGate': 'D4',
-            'flightNumber': 'OR1402',
-            'direction': 'Departure'
-        }, {
-            'currentGate': 'E2',
-            'previousGate': 'A4',
-            'flightNumber': 'OR629',
-            'direction': 'Arrival'
-        }, {
-            'currentGate': 'A4',
-            'previousGate': 'E19',
-            'flightNumber': 'OR1941',
-            'direction': 'Arrival'
-        }, {'currentGate': 'C27', 'previousGate': 'G1', 'flightNumber': 'OR1566', 'direction': 'Arrival'}];
     stateGroupOptions: Observable<GateChange[]>;
-    users$: Object;
 
-    constructor(private _formBuilder: FormBuilder, private data: CrudService) {
+    constructor(private _formBuilder: FormBuilder, private data: SearchService) {
     }
 
     ngOnInit() {
-        this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => this._filterGroup(value))
-            );
+        this.stateForm.get('stateGroup')!.valueChanges
+            .subscribe(result => this.getGateChanges(result));
     }
 
-    private _filterGroup(value: string): GateChange[] {
-        if (value) {
-            this.data.getGateChanges(value).subscribe(
-                data => this.users$ = data
+    private getGateChanges(result: string) {
+        if (result) {
+            this.data.search(result).subscribe(
+                data => this._filterGroup(data)
             );
-            return this.stateGroups.filter(group => group.flightNumber.includes(value));
+        } else {
+            this.stateGroupOptions = of(null);
         }
+    }
 
-        return this.stateGroups;
+    private _filterGroup(response: Object) {
+        if (response) {
+            let result: GateChange[] = [];
+            (response as Array<GateChange>).map(function (gateChange:GateChange) {
+                result.push(gateChange)
+            });
+            this.stateGroupOptions = of(result);
+            return result
+        }
     }
 }
