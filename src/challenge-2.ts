@@ -20,5 +20,25 @@
  */
 
 export const removeOppositeChars = (input: string): string => {
-    return input;
+    let index/*, operationNumber*/:number;
+    let prev, curr:string;
+    // operationNumber = 0;
+    function findOppositeCaseAndReplaceRecursive(arrInput: string[]):string {
+        for (index = 1; index < arrInput.length; index++) {
+            prev = arrInput[index -1];
+            curr = arrInput[index];
+            let target = prev + curr;
+            if(input.includes(target) && prev.toLowerCase() == curr.toLowerCase() && prev != curr){
+                // console.log('operation: ' + operationNumber++ + ' input: ' + input + ' index: ' + index + ' curr: ' + curr + ' prev: ' + prev);
+                input = input.replace(new RegExp(target, 'g'), '');
+                findOppositeCaseAndReplaceRecursive(Array.from(input));
+            }
+            if(index == arrInput.length){
+                break
+            }
+        }
+        return input
+    }
+    return findOppositeCaseAndReplaceRecursive(Array.from(input));
 };
+
