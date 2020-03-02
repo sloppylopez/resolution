@@ -1,6 +1,6 @@
 export interface GateChange {
     flightNumber: string;
     direction: string;
-    departureTime: string;
-    arrivalTime: string;
+    time:string;
+    landsIn:string;
 }

@@ -8,7 +8,7 @@
                    [matAutocomplete]="autoGroup">
             <mat-autocomplete #autoGroup="matAutocomplete" >
                 <mat-option *ngFor="let group of stateGroupOptions | async" [value]="group.flightNumber">
-                    {{group.flightNumber + ' ' + group.direction + ' ' + group.departureTime + ' ' + group.arrivalTime}}
+                    {{group.flightNumber + ' ' + group.landsIn + ' ' + group.direction + ' '+ group.time + ' '}}
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>

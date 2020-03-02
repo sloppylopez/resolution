@@ -60,13 +60,12 @@ export class AppComponent implements OnInit {
         let isSubscribedDeparture = false;
         gateChanges.forEach((gateChange: GateChange) => {
             if (gateChange.direction == 'Arrival') {
-                if(!isSubscribedArrival){
+                if (!isSubscribedArrival) {
                     this.data.getArrivals().subscribe(data => this.addArrivals(data));
                     isSubscribedArrival = true;
                 }
-
             } else {
-                if(!isSubscribedDeparture) {
+                if (!isSubscribedDeparture) {
                     this.data.getDepartures().subscribe(data => this.addDepartures(data));
                     isSubscribedDeparture = true;
                 }
@@ -97,25 +96,20 @@ export class AppComponent implements OnInit {
     private addDataToGateChange(data: Origin[] | Destination[]) {
         this.stateGroup.forEach(gateChange => {
                 if (gateChange) {
-                    let originalDirection = gateChange.direction;
                     data.forEach((element) => {
                         if (gateChange.flightNumber == element.flightNumber) {
-                            gateChange.direction = this.findDirectionByFlightNumber(data, gateChange);
-                            if (originalDirection == 'Arrival') {
-                                let time = this.findTimeByFlightNumber(element as Origin, gateChange);
-                                gateChange.arrivalTime = time ? time : gateChange.arrivalTime;
-                                console.log('arrival time: ' + time);
-                            } else {
-                                let time = this.findTimeByFlightNumber(element as Destination, gateChange);
-                                gateChange.departureTime = time ? time : gateChange.departureTime;
-                                console.log('departure time: ' + time);
-                            }
+                            gateChange.landsIn = this.findDirectionByFlightNumber(data, gateChange);
+                            let time = this.findTimeByFlightNumber(element, gateChange);
+                            gateChange.time = time ? time : gateChange.time;
                         }
                     });
                     return gateChange
                 }
             }
         );
+        this.stateGroup=this.stateGroup.sort(function(a:GateChange, b:GateChange){
+            return Math.round(new Date(a.time).getTime()/1000) - Math.round(new Date(b.time).getTime()/1000)
+        });
         this.stateGroupOptions = of(this.stateGroup);
     }
 
