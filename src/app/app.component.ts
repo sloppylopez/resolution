@@ -6,7 +6,7 @@ import {GateChange} from "./interfaces/gatechange.interface";
 import {SearchService} from "./services/crud.service";
 import {Destination} from "./interfaces/destination.interface";
 import {Origin} from "./interfaces/origin.interface";
-import { APP_BASE_HREF } from '@angular/common';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -44,13 +44,11 @@ export class AppComponent implements OnInit {
     private _filterGroup(data: Object): void {
         if ((data as Array<any>).length > 0) {
             let gateChanges = data as GateChange[];
+            gateChanges = gateChanges.slice(Math.max(gateChanges.length - 5, 0));
+            this.stateGroup = gateChanges;
+            this.stateGroupOptions = of(gateChanges);
+            this.getDirections(gateChanges);
 
-            if (gateChanges.length > 0) {
-                gateChanges = gateChanges.slice(Math.max(gateChanges.length - 5, 0));
-                this.stateGroup = gateChanges;
-                this.stateGroupOptions = of(gateChanges);
-                this.getDirections(gateChanges);
-            }
         } else {
             this.stateGroupOptions = of(null);
         }
@@ -77,20 +75,16 @@ export class AppComponent implements OnInit {
     private addDepartures(data: Object) {
         if ((data as Array<any>).length > 0) {
             let destinations = data as Destination[];
-            if (destinations.length > 0) {
-                this.departures = of(destinations);
-                this.departures.subscribe(data => this.addDataToGateChange(data))
-            }
+            this.departures = of(destinations);
+            this.departures.subscribe(data => this.addDataToGateChange(data))
         }
     }
 
     private addArrivals(data: Object) {
         if ((data as Array<any>).length > 0) {
             let arrivals = data as Origin[];
-            if (arrivals.length > 0) {
-                this.arrivals = of(arrivals);
-                this.arrivals.subscribe(data => this.addDataToGateChange(data))
-            }
+            this.arrivals = of(arrivals);
+            this.arrivals.subscribe(data => this.addDataToGateChange(data))
         }
     }
 
@@ -108,8 +102,8 @@ export class AppComponent implements OnInit {
                 }
             }
         );
-        this.stateGroup=this.stateGroup.sort(function(a:GateChange, b:GateChange){
-            return Math.round(new Date(a.time).getTime()/1000) - Math.round(new Date(b.time).getTime()/1000)
+        this.stateGroup = this.stateGroup.sort(function (a: GateChange, b: GateChange) {
+            return Math.round(new Date(a.time).getTime() / 1000) - Math.round(new Date(b.time).getTime() / 1000)
         });
         this.stateGroupOptions = of(this.stateGroup);
     }
