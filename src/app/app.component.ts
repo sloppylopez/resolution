@@ -6,6 +6,7 @@ import {GateChange} from "./interfaces/gatechange.interface";
 import {SearchService} from "./services/crud.service";
 import {Destination} from "./interfaces/destination.interface";
 import {Origin} from "./interfaces/origin.interface";
+import { APP_BASE_HREF } from '@angular/common';
 
 @Component({
     selector: 'app-root',
