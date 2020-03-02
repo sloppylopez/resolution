@@ -43,13 +43,10 @@ export class AppComponent implements OnInit {
     private _filterGroup(data: Object): void {
         if ((data as Array<any>).length > 0) {
             let gateChanges = data as GateChange[];
-
-            if (gateChanges.length > 0) {
-                gateChanges = gateChanges.slice(Math.max(gateChanges.length - 5, 0));
-                this.stateGroup = gateChanges;
-                this.stateGroupOptions = of(gateChanges);
-                this.getDirections(gateChanges);
-            }
+            gateChanges = gateChanges.slice(Math.max(gateChanges.length - 5, 0));
+            this.stateGroup = gateChanges;
+            this.stateGroupOptions = of(gateChanges);
+            this.getDirections(gateChanges);
         } else {
             this.stateGroupOptions = of(null);
         }
